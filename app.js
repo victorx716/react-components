@@ -1,33 +1,46 @@
 // TODO
-class GroceryList extends React.Component {
+// var list = 
+
+class GroceryListItem extends React.Component {
+  constructor(props) {
+    super(props);
     
-    constructor(props) {
-      super(props);
+    this.state = {
+      done: false
+    };
+  }
+  
+  onListItemClick() {
+    this.setState({
+      done: !this.state.done
+    });
+  }
+  
+  render() {
+    
+    var style = {
+      textDecoration: this.state.done ? 'line-through' : 'none'
     }
     
-    render() {
-      
-      return (
-          <li>{this.props.items}</li>
-      );
-    }
+   return (
+   <li style = {style} onClick={this.onListItemClick.bind(this)}>{this.props.item}</li>
+   );
+ }
 }
 
 
-
-var GroceryListItem = (props) => (
-  <ul>
-    {props.items.map(items =>
-      <GroceryListItem items={items} />
-      )}
-  </ul>
+var GroceryList = (props) => (
+ <ul>
+  {props.items.map(item => 
+   <GroceryListItem item={item} />
+   )}
+ </ul>
 );
 
-ReactDOM.render(<GroceryListItem />, document.getElementById('app'));
+var App  = () => (
+<div>
+  <GroceryList items={["milk", "eggs"]}/>
+</div>
+);
 
-
-// /*
-//     <h2> My Shopping List </h2>
-//     <GroceryList items = {['Meatballs', 'Kale']}/>
-
-// */
+ReactDOM.render(<App />, document.getElementById('app'));
